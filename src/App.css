@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+ 
 }
 
 .App-logo {
@@ -22,6 +23,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  
 }
 
 .App-link {
@@ -34,5 +36,47 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.spinner{
+  justify-content: center;
+  margin: 100px;
+}
+.cocktail-list {
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+  padding: 20px;
+}
+
+.cocktail-card {
+  flex: 1 1 calc(25% - 20px);
+  margin: 10px; 
+  max-width: 250px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px; 
+  overflow: hidden;
+  transition: transform 0.2s; 
+}
+
+.cocktail-card:hover {
+  transform: scale(1.05);}
+
+@media (max-width: 1200px) {
+  .cocktail-card {
+    flex: 1 1 calc(33.33% - 20px); 
+}}
+
+@media (max-width: 900px) {
+  .cocktail-card {
+    flex: 1 1 calc(50% - 20px); 
+  }
+}
+
+@media (max-width: 600px) {
+  .cocktail-card {
+    flex: 1 1 100%; 
   }
 }
