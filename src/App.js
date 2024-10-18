@@ -1,9 +1,11 @@
 import './App.css';
 import ColorSchemesExample from './components/navbar';
 import BasicExample from './components/card';
+import FavoriteList from './components/list'; // Assurez-vous d'importer votre composant de liste de favoris
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
 import { Spinner } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   const [cocktailsData, setCocktailsData] = useState([]);
@@ -74,16 +76,11 @@ function App() {
       setLoading(true);
       const alcoholicCocktails = await fetchAlcoholicCoktails();
       const nonAlcoholicCocktails = await fetchNonAlcoholicCoktails();
-
-      // Combiner les deux listes
       const combinedCocktails = [...alcoholicCocktails, ...nonAlcoholicCocktails];
-
-      // Mélanger les cocktails
       shuffleArray(combinedCocktails);
-
-      // Mettre à jour l'état avec la liste mélangée
       setCocktailsData(combinedCocktails);
       console.log(combinedCocktails)
+    
       setLoading(false);
     };
 
@@ -91,27 +88,38 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <ColorSchemesExample />
+    <Router>
+      <div className="App">
+        <ColorSchemesExample />
 
-      {loading ? (
-        <Spinner className="spinner" animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
-      ) : (
-        <div className="cocktail-list">
-          {cocktailsData.map((cocktail, index) => (
-            <div className="cocktail-card" key={index}>
-              <BasicExample
-                title={cocktail.strDrink}
-                categorie={cocktail.strCategory || ''}
-                img={cocktail.strDrinkThumb}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+        {loading ? (
+          <Spinner className="spinner" animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        ) : (
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <div className="cocktail-list">
+                  {cocktailsData.map((cocktail, index) => (
+                    <div className="cocktail-card" key={index}>
+                      <BasicExample
+                        title={cocktail.strDrink}
+                        categorie={cocktail.strCategory || ''}
+                        img={cocktail.strDrinkThumb}
+                        item={cocktail}
+                      />
+                    </div>
+                  ))}
+                </div>
+              } 
+            />
+            <Route path="/favoris" element={<FavoriteList />} />
+          </Routes>
+        )}
+      </div>
+    </Router>
   );
 }
 
