@@ -1,11 +1,12 @@
 import './App.css';
 import ColorSchemesExample from './components/navbar';
 import BasicExample from './components/card';
-import FavoriteList from './components/list'; // Assurez-vous d'importer votre composant de liste de favoris
+import FavoriteList from './components/list'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import RecipeDetail from './components/details'; 
 
 function App() {
   const [cocktailsData, setCocktailsData] = useState([]);
@@ -116,6 +117,7 @@ function App() {
               } 
             />
             <Route path="/favoris" element={<FavoriteList />} />
+            <Route path="/recette/:id" element={<RecipeDetail />} />
           </Routes>
         )}
       </div>
